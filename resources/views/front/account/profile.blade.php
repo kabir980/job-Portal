@@ -18,6 +18,7 @@
                     @include('front.account.sidebar')
                 </div>
                 <div class="col-lg-9">
+                    @include('front.message')
                     <div class="card border-0 shadow mb-4">
                         <form action="" method="post" name="userForm" id="userForm">
                             <div class="card-body  p-4">
@@ -26,13 +27,13 @@
                                     <label for="" class="mb-2">Name*</label>
                                     <input type="text" name="name" id="name" value="{{ $user->name }}"
                                         placeholder="Enter Name" class="form-control">
-                                        <p></p>
+                                    <p></p>
                                 </div>
                                 <div class="mb-4">
                                     <label for="" class="mb-2">Email*</label>
                                     <input type="text" name="email" id="email" value="{{ $user->email }}"
                                         placeholder="Enter Email" class="form-control">
-                                        <p></p>
+                                    <p></p>
                                 </div>
                                 <div class="mb-4">
                                     <label for="" class="mb-2">Designation</label>
@@ -70,7 +71,7 @@
                             </div>
                         </div>
                         <div class="card-footer  p-4">
-                            <button type="button" class="btn btn-primary">Update</button>
+                            <button type="submit" class="btn btn-primary">Update</button>
                         </div>
                     </div>
                 </div>
@@ -81,7 +82,9 @@
 
 @section('customJs')
     <script type="text/javascript">
+
         $("#userForm").submit(function(e) {
+
             e.preventDefault();
 
             $.ajax({
@@ -90,8 +93,23 @@
                 dataType: 'json',
                 data: $("#userForm").serializeArray(),
                 success: function(response) {
+                    if (response.status == true) {
 
-                    if (response.status == false) {
+                        $("#name")
+                                .removeClass('is-invalid')
+                                .siblings('p')
+                                .removeClass('invalid-feedback')
+                                .html('');
+
+                                $("#email")
+                                .removeClass('is-invalid')
+                                .siblings('p')
+                                .removeClass('invalid-feedback')
+                                .html('');
+
+                                window.location.href = "{{route('account.profile')}}";
+
+                    } else {
 
                         var errors = response.errors;
 
@@ -111,7 +129,7 @@
                         }
 
                         //For invalid email
-                        if (errors.email) {
+                        if ( errors.email) {
                             $("#email")
                                 .addClass('is-invalid')
                                 .siblings('p')
@@ -124,12 +142,6 @@
                                 .removeClass('invalid-feedback')
                                 .html('');
                         }
-
-                    } else {
-
-
-
-
                     }
                 }
 

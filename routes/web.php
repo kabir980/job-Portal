@@ -51,6 +51,8 @@ Route::group(['prefix' =>'account'], function () {
 
         Route::get('/logout', [AccountController::class, 'logout'])->name('account.logout');
 
+        Route::post('/update-profile-pic', [AccountController::class, 'updateProfilePic'])->name('account.updateProfilePic');
+
     });
 
 });

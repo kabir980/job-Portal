@@ -11,7 +11,7 @@
     <meta name="pinterest" content="nopin" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/style.css')}}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}" />
     <!-- Fav Icon -->
     <link rel="shortcut icon" type="image/x-icon" href="#" />
 </head>
@@ -37,9 +37,11 @@
                     </ul>
                     {{-- // check Chek the user logged in or not --}}
                     @if (!Auth::check())
-                    <a class="btn btn-outline-primary me-2" href="{{route('account.login')}}" type="submit">Login</a>
-                        @else
-                        <a class="btn btn-outline-primary me-2" href="{{route('account.profile')}}" type="submit">Account</a>
+                        <a class="btn btn-outline-primary me-2" href="{{ route('account.login') }}"
+                            type="submit">Login</a>
+                    @else
+                        <a class="btn btn-outline-primary me-2" href="{{ route('account.profile') }}"
+                            type="submit">Account</a>
                     @endif
 
                     <a class="btn btn-primary" href="post-job.html" type="submit">Post a Job</a>
@@ -49,10 +51,9 @@
     </header>
 
 
- @yield( 'main' )
+    @yield('main')
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -60,10 +61,11 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="profilePicForm" name="profilePicForm" action="" method="post">
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Profile Image</label>
                             <input type="file" class="form-control" id="image" name="image">
+                            <p class="text-danger" id="image-error"></p>
                         </div>
                         <div class="d-flex justify-content-end">
                             <button type="submit" class="btn btn-primary mx-3">Update</button>
@@ -81,21 +83,51 @@
             <p class="text-center text-white pt-3 fw-bold fs-6">© 2023 xyz company, all right reserved</p>
         </div>
     </footer>
-    <script src="{{asset('assets/js/jquery-3.6.0.min.js')}}"></script>
-    <script src="{{asset('assets/js/bootstrap.bundle.5.1.3.min.js')}}"></script>
-    <script src="{{asset('assets/js/instantpages.5.1.0.min.js')}}"></script>
-    <script src="{{asset('assets/js/lazyload.17.6.0.min.js')}}"></script>
-    <script src="{{asset('assets/js/custom.js')}}"></script>
+    <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap.bundle.5.1.3.min.js') }}"></script>
+    <script src="{{ asset('assets/js/instantpages.5.1.0.min.js') }}"></script>
+    <script src="{{ asset('assets/js/lazyload.17.6.0.min.js') }}"></script>
+    <script src="{{ asset('assets/js/custom.js') }}"></script>
 
-<script>
-    $.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
-</script>
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
 
-@yield('customJs')
+        $("#profilePicForm").submit(function(e) {
+
+            e.preventDefault();
+            var formData = new FormData(this);
+
+            $.ajax({
+                url: '{{ route('account.updateProfilePic') }}',
+                type: 'post',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    if (response.status == false) {
+                        var errors = response.errors;
+                        if (errors.image) {
+                            $("#image-error").html(errors.image);
+                        }
+
+
+                    }
+                    else{
+
+                    }
+                }
+
+            });
+
+        });
+    </script>
+
+    @yield('customJs')
 
 </body>
 

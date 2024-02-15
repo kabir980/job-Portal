@@ -121,7 +121,7 @@ class AccountController extends Controller
         } else {
             return response()->json([
                 'status' => false,
-                'error' => $validator->errors(),
+                'errors' => $validator->errors(),
             ]);
         }
     }
@@ -131,4 +131,23 @@ class AccountController extends Controller
         Auth::logout();
         return redirect()->route('account.login');
     }
+
+    public function updateProfilePic(Request $request){
+           // dd($request->all());
+           //image validation
+        $validator = Validator::make($request->all(), [
+            'image' => 'required|image'
+            ]);
+
+            if($validator->passes()){
+
+            }else{
+                return response()->json([
+                    'status' => 'false',
+                    'errors' => $validator->errors(),
+                    ]);
+            }
+
+    }
+
 }
