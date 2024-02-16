@@ -118,6 +118,7 @@
 
                     }
                     else{
+                        window.location.href = '{{url()->current()}}'
 
                     }
                 }
