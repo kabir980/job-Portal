@@ -53,6 +53,8 @@ Route::group(['prefix' =>'account'], function () {
 
         Route::post('/update-profile-pic', [AccountController::class, 'updateProfilePic'])->name('account.updateProfilePic');
 
+        Route::get('/create-job', [AccountController::class, 'createJob'])->name('account.createJob');
+
     });
 
 });

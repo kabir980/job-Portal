@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\JobType;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -162,11 +164,11 @@ class AccountController extends Controller
 
             // crop the best fitting 5:3 (600x360) ratio and resize to 600x360 pixel
             $image->cover(150, 150);
-            $image->toPng()->save(public_path('/profile_pic/thumb/'.$imageName));
+            $image->toPng()->save(public_path('/profile_pic/thumb/' . $imageName));
 
             //Deleting the old pic
-            File::delete(public_path('/profile_pic/thumb/'.Auth::user()->image));
-            File::delete(public_path('/profile_pic/'.Auth::user()->image));
+            File::delete(public_path('/profile_pic/thumb/' . Auth::user()->image));
+            File::delete(public_path('/profile_pic/' . Auth::user()->image));
 
             User::where('id', $id)->update(['image' => $imageName]);
 
@@ -187,6 +189,33 @@ class AccountController extends Controller
             ]);
         }
 
+    }
+
+    public function createJob()
+    {
+
+        $categories = Category::orderBy('name', 'ASC')->where('status', 1)->get();
+
+        $jobTypes = JobType::orderBy('name', 'Asc')->where('status', 1)->get();
+
+        return view('front.account.job.create', [
+            'categories' => $categories,
+            'jobTypes' => $jobTypes,
+        ]);
+    }
+
+    public function saveJob(Request $request){
+        $validator = Validator::make($request->all(), [
+            'title' => 'required',
+            'category' => 'required',
+            'jobType' => 'required',
+            'vacancy' => 'required',
+            'location' => 'required',
+            'description' => 'required',
+            'company_name' => 'required',
+            
+
+            ]);
     }
 
 }
