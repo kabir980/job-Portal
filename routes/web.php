@@ -63,6 +63,8 @@ Route::group(['prefix' =>'account'], function () {
 
         Route::post('/update-job/{jobId}', [AccountController::class, 'updateJob'])->name('account.updateJob');
 
+        Route::post('/delete-job', [AccountController::class, 'deleteJob'])->name('account.deleteJob');
+
     });
 
 });
