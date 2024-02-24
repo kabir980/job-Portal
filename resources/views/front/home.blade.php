@@ -75,37 +75,38 @@
                     <div class="job_lists">
                         <div class="row">
                             @if ($featuredJobs->isNotEmpty())
-                            @foreach ($featuredJobs as $featuredJob)
-                            <div class="col-md-4">
-                                <div class="card border-0 p-3 shadow mb-4">
-                                    <div class="card-body">
-                                        <h3 class="border-0 fs-5 pb-2 mb-0">{{$featuredJob->title}}</h3>
-                                        {{-- With the help of Str::words (), we can limit the number of words in a string --}}
-                                        <p>{{Str::words($featuredJob->description, 5)}}</p>
-                                        <div class="bg-light p-3 border">
-                                            <p class="mb-0">
-                                                <span class="fw-bolder"><i class="fa fa-map-marker"></i></span>
-                                                <span class="ps-1">{{$featuredJob->location}}</span>
-                                            </p>
-                                            <p class="mb-0">
-                                                <span class="fw-bolder"><i class="fa fa-clock-o"></i></span>
-                                                <span class="ps-1">{{$featuredJob->jobType->name}}</span>
-                                            </p>
-                                            @if (!is_null($featuredJob->salary))
-                                            <p class="mb-0">
-                                                <span class="fw-bolder"><i class="fa fa-usd"></i></span>
-                                                <span class="ps-1">{{$featuredJob->salary}}</span>
-                                            </p>
-                                            @endif
-                                        </div>
+                                @foreach ($featuredJobs as $featuredJob)
+                                    <div class="col-md-4">
+                                        <div class="card border-0 p-3 shadow mb-4">
+                                            <div class="card-body">
+                                                <h3 class="border-0 fs-5 pb-2 mb-0">{{ $featuredJob->title }}</h3>
+                                                {{-- With the help of Str::words (), we can limit the number of words in a string --}}
+                                                <p>{{ Str::words($featuredJob->description, 5) }}</p>
+                                                <div class="bg-light p-3 border">
+                                                    <p class="mb-0">
+                                                        <span class="fw-bolder"><i class="fa fa-map-marker"></i></span>
+                                                        <span class="ps-1">{{ $featuredJob->location }}</span>
+                                                    </p>
+                                                    <p class="mb-0">
+                                                        <span class="fw-bolder"><i class="fa fa-clock-o"></i></span>
+                                                        <span class="ps-1">{{ $featuredJob->jobType->name }}</span>
+                                                    </p>
+                                                    @if (!is_null($featuredJob->salary))
+                                                        <p class="mb-0">
+                                                            <span class="fw-bolder"><i class="fa fa-usd"></i></span>
+                                                            <span class="ps-1">{{ $featuredJob->salary }}</span>
+                                                        </p>
+                                                    @endif
+                                                </div>
 
-                                        <div class="d-grid mt-3">
-                                            <a href="job-detail.html" class="btn btn-primary btn-lg">Details</a>
+                                                <div class="d-grid mt-3">
+                                                    <a href="{{ route('jobDetail', $featuredJob->id) }}"
+                                                        class="btn btn-primary btn-lg">Details</a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            @endforeach
+                                @endforeach
                             @endif
 
                         </div>
@@ -123,37 +124,38 @@
                     <div class="job_lists">
                         <div class="row">
                             @if ($latestJobs->isNotEmpty())
-                            @foreach ($latestJobs as $latestJob)
-                            <div class="col-md-4">
-                                <div class="card border-0 p-3 shadow mb-4">
-                                    <div class="card-body">
-                                        <h3 class="border-0 fs-5 pb-2 mb-0">{{$latestJob->title}}</h3>
-                                        {{-- With the help of Str::words (), we can limit the number of words in a string --}}
-                                        <p>{{Str::words($latestJob->description, 5)}}</p>
-                                        <div class="bg-light p-3 border">
-                                            <p class="mb-0">
-                                                <span class="fw-bolder"><i class="fa fa-map-marker"></i></span>
-                                                <span class="ps-1">{{$latestJob->location}}</span>
-                                            </p>
-                                            <p class="mb-0">
-                                                <span class="fw-bolder"><i class="fa fa-clock-o"></i></span>
-                                                <span class="ps-1">{{$latestJob->jobType->name}}</span>
-                                            </p>
-                                            @if (!is_null($latestJob->salary))
-                                            <p class="mb-0">
-                                                <span class="fw-bolder"><i class="fa fa-usd"></i></span>
-                                                <span class="ps-1">{{$latestJob->salary}}</span>
-                                            </p>
-                                            @endif
-                                        </div>
+                                @foreach ($latestJobs as $latestJob)
+                                    <div class="col-md-4">
+                                        <div class="card border-0 p-3 shadow mb-4">
+                                            <div class="card-body">
+                                                <h3 class="border-0 fs-5 pb-2 mb-0">{{ $latestJob->title }}</h3>
+                                                {{-- With the help of Str::words (), we can limit the number of words in a string --}}
+                                                <p>{{ Str::words($latestJob->description, 5) }}</p>
+                                                <div class="bg-light p-3 border">
+                                                    <p class="mb-0">
+                                                        <span class="fw-bolder"><i class="fa fa-map-marker"></i></span>
+                                                        <span class="ps-1">{{ $latestJob->location }}</span>
+                                                    </p>
+                                                    <p class="mb-0">
+                                                        <span class="fw-bolder"><i class="fa fa-clock-o"></i></span>
+                                                        <span class="ps-1">{{ $latestJob->jobType->name }}</span>
+                                                    </p>
+                                                    @if (!is_null($latestJob->salary))
+                                                        <p class="mb-0">
+                                                            <span class="fw-bolder"><i class="fa fa-usd"></i></span>
+                                                            <span class="ps-1">{{ $latestJob->salary }}</span>
+                                                        </p>
+                                                    @endif
+                                                </div>
 
-                                        <div class="d-grid mt-3">
-                                            <a href="job-detail.html" class="btn btn-primary btn-lg">Details</a>
+                                                <div class="d-grid mt-3">
+                                                    <a href="{{ route('jobDetail', $latestJob->id) }}"
+                                                        class="btn btn-primary btn-lg">Details</a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            @endforeach
+                                @endforeach
                             @endif
                         </div>
                     </div>

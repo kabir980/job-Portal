@@ -11,8 +11,8 @@
                 <div class="col-6 col-md-2">
                     <div class="align-end">
                         <select name="sort" id="sort" class="form-control">
-                            <option value="">Latest</option>
-                            <option value="">Oldest</option>
+                            <option {{(Request::get('sort') == '1') ? 'selected':''}} value="1">Latest</option>
+                            <option {{(Request::get('sort') == '0') ? 'selected' : ''}} value="0">Oldest</option>
                         </select>
                     </div>
                 </div>
@@ -72,10 +72,11 @@
                                     <option value="8" {{(Request::get('experience')==8) ? 'selected' : '' }}>8 Years</option>
                                     <option value="9" {{(Request::get('experience')==9) ? 'selected' : '' }}>9 Years</option>
                                     <option value="10" {{(Request::get('experience')==10) ? 'selected' : '' }}>10 Years</option>
-                                    <option value="10_plus" {{(Request::get('ecperience') == '10_plus') ? 'selected' : ''}}>10+ Years</option>
+                                    <option value="10_plus" {{(Request::get('experience') == '10_plus') ? 'selected' : ''}}>10+ Years</option>
                                 </select>
                             </div>
-                            <button type="submmit" class="btn btn-primary">search</button>
+                            <button type="submit" class="btn btn-primary">search</button>
+                            <a href="{{route('jobs')}}" class="btn btn-secondary mt-3">Reset</a>
                         </div>
 
                     </form>
@@ -110,7 +111,7 @@
                                                     </div>
 
                                                     <div class="d-grid mt-3">
-                                                        <a href="job-detail.html" class="btn btn-primary btn-lg">Details</a>
+                                                        <a href="{{route('jobDetail', $job->id)}}" class="btn btn-primary btn-lg">Details</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -143,6 +144,7 @@
         var location = $("#location").val();
         var category = $("#category").val();
         var experience = $("#experience").val();
+        var sort = $("#sort").val();
 
         //From this i will get the array of checked check box
        var checkedJobTypes = $("input:checkbox[name='job_type']:checked").map(function(){
@@ -174,9 +176,15 @@
             url += '&JobType=' + checkedJobTypes;
         }
 
+        url += '&sort=' +sort;
+
         window.location.href=url;
 
     });
+
+    $("#sort").change(function(e){
+        $("#searchForm").submit();
+    })
 </script>
 @endsection
 
