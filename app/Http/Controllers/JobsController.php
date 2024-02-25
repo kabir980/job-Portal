@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Job;
+use App\Models\JobApplication;
 use App\Models\JobType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class JobsController extends Controller
 {
@@ -93,5 +95,58 @@ class JobsController extends Controller
         return view('front.jobDetail', [
             'job' => $job,
             ]);
+    }
+
+    public function applyJob(Request $request){
+        $id = $request->id;
+        $job = Job::where('id', $id)->first();
+        //if job not found in db
+        if($job == null){
+            session()->flash('error','The job does not exist!');
+            return response()->json([
+                'status' => false,
+                'message' => 'job does not exist'
+                ]);
+        }
+
+        //you can not apply on your own job
+        $employer_id = $job->user_id;
+
+        if($employer_id == Auth::user()->id){
+            session()->flash('error','You can not apply on your own job!');
+            return response()->json([
+                'status' => false,
+                'message' => 'You can not apply on your own job!'
+                ]);
+        }
+
+        // you can not apply on a job twise
+        $jobApplicationCount = JobApplication::where([
+            'user_id' => Auth::user()->id,
+            'job_id' => $id
+            ])->count();
+
+            if( $jobApplicationCount > 0 ){
+                session()->flash('error','You have already applied for this job!');
+                return response()->json([
+                    'status' => false,
+                    'message' =>  "You have already applied for this job!"
+                    ]);
+
+            }
+
+        $application = new JobApplication();
+        $application->job_id = $id;
+        $application->user_id = Auth::user()->id;
+        $application->employer_id =  $employer_id;
+        $application->applied_date = now();
+        $application->save();
+
+        session()->flash('success','You have successfully applied');
+            return response()->json([
+                'status' => true,
+                'message' => 'You have successfully applied'
+                ]);
+
     }
 }
