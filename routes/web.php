@@ -33,6 +33,8 @@ Route::post('/apply-job', [JobsController::class, 'applyJob'])->name('applyJob')
 
 
 
+
+
 Route::group(['prefix' =>'account'], function () {
 
     //Guest Route
@@ -72,6 +74,7 @@ Route::group(['prefix' =>'account'], function () {
 
         Route::post('/delete-job', [AccountController::class, 'deleteJob'])->name('account.deleteJob');
 
+        Route::get('/my-job-appplication', [AccountController::class, 'myJobApplication'])->name('account.myJobApplication');
     });
 
 });
