@@ -367,11 +367,32 @@ class AccountController extends Controller
 
     public function myJobApplication(){
 
-       $jobApplications =  JobApplication::where('user_id', Auth::user()->id)->with('job', 'job.JobType')->paginate(10);
+       $jobApplications =  JobApplication::where('user_id', Auth::user()->id)
+       ->with('job', 'job.JobType', 'job.applications')
+       ->paginate(10);
        //dd( $jobs);
         return view('front.account.job.my-job-applications', [
             'jobApplications' =>  $jobApplications ,
             ]);
+    }
+
+    public function removeJobs(Request $request){
+        $jobApplication = JobApplication::where([
+            'id' => $request->id,
+             'user_id' => Auth::user()->id
+             ])->first();
+
+    if($jobApplication == null){
+        session()->flash('error', 'Job application not found');
+            return response()->json([
+                        'status' => false,
+                       ]);
+    }
+    JobApplication::find($request->id)->delete();
+    session()->flash('success', 'Job application remove successfully');
+            return response()->json([
+                        'status' => true,
+                       ]);
     }
 
 }

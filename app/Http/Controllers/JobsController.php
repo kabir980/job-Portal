@@ -160,7 +160,8 @@ class JobsController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => 'You have successfully applied'
-                ]);
-
+         ]);
     }
+
+    
 }
