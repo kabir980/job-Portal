@@ -13,6 +13,8 @@ class HomeController extends Controller
 
         //fetching the category from the datavase category with the help of Category model
         $categories = Category::where('status', 1)->orderBy('name', 'ASC')->take(8)->get();
+        // Search all the category from the database
+         $newCategories =  Category::where('status', 1)->orderBy('name', 'ASC')->take(8)->get();
 
         //fetching the featured jobs from the database
         //teke method is used  to get the first 6 records from the database
@@ -24,7 +26,10 @@ class HomeController extends Controller
         return view("front.home", [
             'categories' => $categories,
             'featuredJobs' => $featuredJobs,
-            'latestJobs' => $latestJobs
+            'latestJobs' => $latestJobs,
+            'newCategories' => $newCategories
         ]);
     }
+
+
 }
