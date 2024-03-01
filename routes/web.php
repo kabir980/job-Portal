@@ -28,8 +28,7 @@ Route::get('/jobs/detail/{id}', [JobsController::class, 'detail'])->name('jobDet
 
 Route::post('/apply-job', [JobsController::class, 'applyJob'])->name('applyJob');
 
-
-
+Route::post('/save-job', [JobsController::class, 'saveJob'])->name('saveJob');
 
 
 
@@ -47,6 +46,8 @@ Route::group(['prefix' =>'account'], function () {
         Route::get('/login', [AccountController::class, 'login'])->name('account.login');
 
         Route::post('/authencate', [AccountController::class, 'authencate'])->name('account.authencate');
+
+
 
     });
 
