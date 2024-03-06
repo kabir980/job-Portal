@@ -82,6 +82,8 @@ Route::group(['prefix' =>'account'], function () {
         Route::get('/saved-jobs', [AccountController::class, 'savedJobs'])->name('account.savedJobs');
 
         Route::post('/remove-saved-job', [AccountController::class, 'removeSavedJob'])->name('account.removeSavedJob');
+
+        Route::post('/update-password', [AccountController::class, 'updatePassword'])->name('account.updatePassword');
     });
 
 });
