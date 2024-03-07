@@ -83,22 +83,22 @@
 
                                 <div class="mb-4">
                                     <label for="" class="mb-2">Description<span class="req">*</span></label>
-                                    <textarea class="form-control"  name="description" id="description" cols="5" rows="5"
+                                    <textarea class="textarea"  name="description" id="description" cols="5" rows="5"
                                         placeholder="Description">{{$job->description}}</textarea>
                                     <p></p>
                                 </div>
                                 <div class="mb-4">
                                     <label for="" class="mb-2">Benefits</label>
-                                    <textarea class="form-control" name="benefits" id="benefits" cols="5" rows="5" placeholder="Benefits">{{$job->benefits}}</textarea>
+                                    <textarea class="textarea" name="benefits" id="benefits" cols="5" rows="5" placeholder="Benefits">{{$job->benefits}}</textarea>
                                 </div>
                                 <div class="mb-4">
                                     <label for="" class="mb-2">Responsibility</label>
-                                    <textarea class="form-control" name="responsibility" id="responsibility" cols="5" rows="5"
+                                    <textarea class="textarea" name="responsibility" id="responsibility" cols="5" rows="5"
                                         placeholder="Responsibility">{{$job->responsility}}</textarea>
                                 </div>
                                 <div class="mb-4">
                                     <label for="" class="mb-2">Qualifications</label>
-                                    <textarea class="form-control" name="qualifications" id="qualifications" cols="5" rows="5"
+                                    <textarea class="textarea" name="qualifications" id="qualifications" cols="5" rows="5"
                                         placeholder="Qualifications">{{$job->qualification}}</textarea>
                                 </div>
 
@@ -168,7 +168,7 @@
         $("#editJobForm").submit(function(e) {
 
             e.preventDefault();
-            $("button[type ='submit']").prop("disabled", true);
+            $("textarea='submit']").prop("disabled", true);
 
             $.ajax({
                 url: '{{ route("account.updateJob", $job->id) }}',
